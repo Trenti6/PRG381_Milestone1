@@ -1,3 +1,308 @@
-#test{
-color:blue
+/* === Reset and Base === */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom right, #0f172a, #1e293b);
+    color: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* === Form Card === */
+form {
+    background-color: rgba(30, 41, 59, 0.95);
+    padding: 40px 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.7s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* === Icon Wrapper (New) === */
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* === Icon === */
+.card-icon {
+    width: 60px;
+    filter: drop-shadow(0 0 8px #38bdf8);
+}
+
+/* === Headings === */
+form h2 {
+    color: #38bdf8;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+form p.subtitle {
+    color: #94a3b8;
+    font-size: 0.95em;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* === Inputs === */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #1e293b;
+    color: #f1f5f9;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus {
+    background-color: #334155;
+    outline: none;
+}
+
+/* === Password Container (Eye Toggle) === */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input[type="password"] {
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #94a3b8;
+    user-select: none;
+}
+
+.toggle-password:hover {
+    color: #f1f5f9;
+}
+
+/* === Forgot Button === */
+.forgot-btn {
+    background: none;
+    border: none;
+    color: #60a5fa;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    text-align: left;
+    display: block;
+    transition: color 0.3s ease;
+    padding: 0;
+}
+
+.forgot-btn:hover {
+    color: #3b82f6;
+}
+
+/* === Submit Button === */
+input[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(to right, #38bdf8, #2563eb);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(96, 165, 250, 0.4); /* softer glow for register */
+}
+
+/* === Login Redirect Footer (New) === */
+.form-footer {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.form-footer a {
+    color: #60a5fa;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 4px;
+    transition: color 0.3s ease;
+}
+
+.form-footer a:hover {
+    color: #3b82f6;
+}
+
+/* === Fade In Animation === */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === Mobile === */
+@media (max-width: 480px) {
+    form {
+        padding: 30px 20px;
+    }
+}
+
+/* === Homepage Welcome Card === */
+.card {
+    background-color: rgba(30, 41, 59, 0.95);
+    padding: 3rem 4rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    max-width: 500px;
+    animation: fadeInUp 0.7s ease;
+}
+
+/* === Button Group === */
+.button-group {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn {
+    background: linear-gradient(135deg, #2563eb, #3b82f6); /* darker, more visible */
+    color: white;
+    padding: 0.8rem 1.8rem;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.2s ease;
+    opacity: 1; /* ensure full visibility */
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    transform: scale(1.05);
+}
+
+/* === Subtitle Text === */
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+/* === Footer Text === */
+.footer-text {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+/* === Dashboard Box === */
+.dashboard-box {
+    background-color: rgba(30, 41, 59, 0.95);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    animation: fadeInUp 0.7s ease;
+}
+
+/* === Links inside Dashboard === */
+.dashboard-box a {
+    margin: 0 0.8rem;
+    font-weight: 600;
+    color: #60a5fa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.dashboard-box a:hover {
+    color: #3b82f6;
+}
+
+/* === Header inside Dashboard === */
+.dashboard-box h2 {
+    color: #38bdf8;
+    margin-bottom: 1rem;
+}
+
+.user-info {
+    text-align: left;
+    margin: 20px 0;
+    color: #f1f5f9;
+    font-size: 0.95rem;
+}
+
+/* === Profile Image Upload === */
+.profile-section {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.profile-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 2px solid #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+/* === File Input === */
+input[type="file"] {
+    margin-bottom: 10px;
+    color: #f1f5f9;
+    background-color: transparent;
+    border: none;
 }
