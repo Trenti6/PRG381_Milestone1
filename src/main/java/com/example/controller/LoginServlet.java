@@ -1,34 +1,59 @@
 package com.example.controller;
 
+import com.example.dbc.DatabaseConnection;
+import com.example.model.User;
+import org.mindrot.jbcrypt.BCrypt;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+
 import java.io.IOException;
+import java.sql.*;
 
-@WebServlet("/login") // This matches your form's action="login"
+@WebServlet(name = "LoginServlet", urlPatterns = "/Login")
 public class LoginServlet extends HttpServlet {
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException {
 
-        // Get form parameters
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
 
-        // Dummy check - replace with real DB/authentication
-        if ("admin@example.com".equals(email) && "password123".equals(password)) {
+        try (Connection conn = DatabaseConnection.initializeDatabase()) {
+            String sql = "SELECT * FROM users WHERE email = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, email);
 
-            // Create session and store user
-            HttpSession session = request.getSession();
-            session.setAttribute("user", email);
+            ResultSet rs = stmt.executeQuery();
 
-            // Redirect to dashboard
-            response.sendRedirect("dashboard.jsp");
+            if (rs.next()) {
+                String hashedPassword = rs.getString("password");
 
-        } else {
-            // Redirect back to log in with error query param
-            response.sendRedirect("login.jsp?error=true");
+                if (BCrypt.checkpw(password, hashedPassword)) {
+                    // Create a User object from the DB result
+                    User user = new User(
+                            rs.getString("student_number"),
+                            rs.getString("name"),
+                            rs.getString("surname"),
+                            rs.getString("email"),
+                            rs.getString("phone"),
+                            hashedPassword
+                    );
+
+                    // Store User object in session
+                    HttpSession session = req.getSession();
+                    session.setAttribute("currentUser", user);
+
+                    res.sendRedirect("dashboard.jsp");
+                    return;
+                }
+            }
+
+            res.sendRedirect("login.jsp?msg=invalid");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            res.sendRedirect("login.jsp?msg=error");
         }
     }
 }
