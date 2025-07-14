@@ -1,4 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.model.User" %>
+<%
+    User user = (User) session.getAttribute("currentUser");
+    if (user == null) {
+        response.sendRedirect("login.jsp?msg=login_required");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +17,12 @@
 <body>
     <div class="dashboard-box">
         <h2>Dashboard</h2>
-        <p>Welcome, <strong>${name}</strong>!</p>
+        <p>Welcome, <strong><%= user.getName() %></strong>!</p>
 
         <div class="user-info">
-            <p><strong>Student Number:</strong> ${student_number}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>Student Number:</strong> <%= user.getStudent_num() %></p>
+            <p><strong>Email:</strong> <%= user.getEmail() %></p>
+            <p><strong>Phone:</strong> <%= user.getPhone() %></p>
         </div>
 
         <!-- Profile Image Upload -->
@@ -28,7 +37,7 @@
         <!-- Navigation Buttons -->
         <div class="button-group" style="margin-top: 2rem;">
             <a href="index.jsp" class="btn" style="color: white;">Home</a>
-            <a href="login.jsp" class="btn" style="color: white;">Logout</a>
+            <a href="Logout" class="btn" style="color: white;">Logout</a>
         </div>
     </div>
 
