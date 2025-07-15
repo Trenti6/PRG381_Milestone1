@@ -68,7 +68,7 @@ public class RegisterServlet extends HttpServlet {
                 return;
             }
 
-            String sql = "INSERT INTO users (student_number, name, surname, email, phone, password) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO users (student_number, name, surname, email, phone, password, profile_pic) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, user.getStudent_num());
             stmt.setString(2, user.getName());
@@ -76,6 +76,7 @@ public class RegisterServlet extends HttpServlet {
             stmt.setString(4, user.getEmail());
             stmt.setString(5, user.getPhone());
             stmt.setString(6, user.getPassword());
+            stmt.setNull(7, java.sql.Types.BINARY);  // Insert NULL for profile_pic
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {

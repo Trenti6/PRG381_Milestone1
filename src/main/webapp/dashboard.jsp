@@ -13,6 +13,16 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard-box">
@@ -25,9 +35,10 @@
             <p><strong>Phone:</strong> <%= user.getPhone() %></p>
         </div>
 
-        <!-- Profile Image Upload -->
+        <!-- Profile Image Display & Upload -->
         <div class="profile-section">
-            <img src="default-avatar.png" alt="Profile Picture" class="profile-pic" id="profilePreview">
+            <img src="DisplayImage" alt="Profile Picture" class="profile-pic" id="profilePreview">
+
             <form action="uploadImage" method="post" enctype="multipart/form-data">
                 <input type="file" name="profileImage" accept="image/*" onchange="previewImage(event)">
                 <input type="submit" value="Upload Image" class="btn">

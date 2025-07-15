@@ -31,13 +31,16 @@ public class LoginServlet extends HttpServlet {
 
                 if (BCrypt.checkpw(password, hashedPassword)) {
                     // Create a User object from the DB result
+                    byte[] profilePic = rs.getBytes("profile_pic");
+
                     User user = new User(
                             rs.getString("student_number"),
                             rs.getString("name"),
                             rs.getString("surname"),
                             rs.getString("email"),
                             rs.getString("phone"),
-                            hashedPassword
+                            hashedPassword,
+                            profilePic
                     );
 
                     // Store User object in session
