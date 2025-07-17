@@ -9,14 +9,14 @@
 <body>
 
 <!-- Custom Alert -->
-<div class="custom-alert" id="customAlert">
+<div class="custom-alert" id="customAlert" style="display: none;">
     <p id="alertMessage">Invalid email or password. Please try again.</p>
     <button onclick="closeAlert()">OK</button>
 </div>
 
 <!-- Login Form -->
 <div class="centered-container">
-    <form action="Login" method="post">
+    <form id="loginForm" action="Login" method="post" onsubmit="return validateForm()">
         <div class="icon-wrapper">
             <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="card-icon" alt="User Icon">
         </div>
@@ -24,7 +24,7 @@
         <h2>Welcome Back</h2>
         <p class="subtitle">Please login to continue</p>
 
-        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="email" name="email" id="email" placeholder="Email Address" required>
 
         <div class="password-container">
             <input type="password" id="password" name="password" placeholder="Password" required>
@@ -35,8 +35,7 @@
         <br>
         <div class="form-footer">
             <a href="forgot_password.jsp" class="forgot-link">Forgot your password?</a>
-            <br>
-            <br>
+            <br><br>
             <a href="index.jsp" class="home">Home</a>
         </div>
     </form>
@@ -65,6 +64,25 @@
 
     function closeAlert() {
         document.getElementById("customAlert").style.display = "none";
+    }
+
+    function validateForm() {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+
+        const emailPattern = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+        if (email === "" || !emailPattern.test(email)) {
+            showAlert("Please enter a valid email address.");
+            return false;
+        }
+
+        if (password.length < 6) {
+            showAlert("Password must be at least 6 characters long.");
+            return false;
+        }
+
+        return true;
     }
 </script>
 

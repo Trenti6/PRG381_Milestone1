@@ -10,14 +10,37 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/Login")
 public class LoginServlet extends HttpServlet {
+
+    // Email regex (simple version)
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(
+            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+    );
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
+        // Sanitize input
+        if (email != null) email = email.trim();
+
+        // Server-side input validation
+        if (email == null || email.isEmpty() || !EMAIL_PATTERN.matcher(email).matches()) {
+            request.setAttribute("error", "Please enter a valid email address.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
+        if (password == null || password.length() < 6) {
+            request.setAttribute("error", "Password must be at least 6 characters long.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
 
         try (Connection conn = DatabaseConnection.initializeDatabase()) {
             String sql = "SELECT * FROM users WHERE email = ?";
@@ -38,12 +61,13 @@ public class LoginServlet extends HttpServlet {
                             rs.getString("surname"),
                             rs.getString("email"),
                             rs.getString("phone"),
-                            hashedPassword,
+                            null, // Don't store hashed password in session
                             profilePic
                     );
 
                     HttpSession session = request.getSession();
                     session.setAttribute("currentUser", user);
+                    session.setMaxInactiveInterval(30 * 60); // Optional: 30 min timeout
 
                     response.sendRedirect("dashboard.jsp");
                     return;
