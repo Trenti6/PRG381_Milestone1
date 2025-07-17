@@ -41,9 +41,9 @@ To run the application 100% correctly, you **must** configure the following:
 EMAIL_USER=example@gmail.com
 EMAIL_PASS=your_app_password
 ```
-
+### SQL Statement for `users` table:
 ```sql
-CREATE TABLE IF NOT EXISTS public.users
+CREATE TABLE users
 (
     student_number character varying(20) NOT NULL,
     name character varying(50) NOT NULL,
@@ -56,6 +56,5 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT users_email_key UNIQUE (email)
 );
 
-ALTER TABLE public.users OWNER TO postgres;
 ```
 ---
