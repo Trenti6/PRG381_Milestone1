@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
                 }
             }
 
-            // ❗ Forward with custom alert message
+            // Forward with custom alert message
             request.setAttribute("error", "Invalid email or password. Please try again.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
 

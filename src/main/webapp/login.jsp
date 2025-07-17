@@ -31,9 +31,14 @@
             <span class="toggle-password" onclick="togglePassword()">🙈</span>
         </div>
 
-
-
         <input type="submit" value="Login">
+        <br>
+        <div class="form-footer">
+            <a href="forgot_password.jsp" class="forgot-link">Forgot your password?</a>
+            <br>
+            <br>
+            <a href="index.jsp" class="home">Home</a>
+        </div>
     </form>
 </div>
 

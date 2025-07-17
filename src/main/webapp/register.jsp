@@ -4,6 +4,31 @@
 <head>
     <title>Register</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        .strength-meter {
+            height: 8px;
+            width: 100%;
+            background-color: #334155;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: -10px;
+            margin-bottom: 8px;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            background-color: red;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .strength-label {
+            font-size: 0.9em;
+            color: #f1f5f9;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 <div class="custom-alert" id="customAlert">
@@ -29,6 +54,11 @@
         <input type="password" id="password" name="password" placeholder="Password" required>
         <span class="toggle-password" onclick="togglePassword()">🙈</span>
     </div>
+
+    <div class="strength-meter">
+        <div id="strengthBar" class="strength-bar"></div>
+    </div>
+    <div id="strengthLabel" class="strength-label">Strength:</div>
 
     <input type="submit" value="Register">
 
@@ -78,8 +108,39 @@
             showAlert(messages[msg]);
         }
     })();
-</script>
 
+    // Password strength meter logic
+    document.getElementById("password").addEventListener("input", function () {
+        const bar = document.getElementById("strengthBar");
+        const label = document.getElementById("strengthLabel");
+        const pwd = this.value;
+        let strength = 0;
+
+        if (pwd.length >= 6) strength += 1;
+        if (/[A-Z]/.test(pwd)) strength += 1;
+        if (/[0-9]/.test(pwd)) strength += 1;
+        if (/[^A-Za-z0-9]/.test(pwd)) strength += 1;
+
+        let width = "0%";
+        let color = "red";
+        let text = "Too Weak";
+
+        switch (strength) {
+            case 1:
+                width = "25%"; color = "red"; text = "Weak"; break;
+            case 2:
+                width = "50%"; color = "orange"; text = "Medium"; break;
+            case 3:
+                width = "75%"; color = "#facc15"; text = "Strong"; break;
+            case 4:
+                width = "100%"; color = "limegreen"; text = "Very Strong"; break;
+        }
+
+        bar.style.width = width;
+        bar.style.backgroundColor = color;
+        label.textContent = "Strength: " + text;
+    });
+</script>
 
 </body>
 </html>

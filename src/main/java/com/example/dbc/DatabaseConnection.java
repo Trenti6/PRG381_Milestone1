@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     // Update the database name if needed
-    private static final String URL = "jdbc:postgresql://localhost:5432/wellnessdb";
+    private static final String URL = "jdbc:postgresql://localhost:5432/wellnessDB";
     private static final String USER = "postgres"; // your PostgreSQL username
-    private static final String PASSWORD = "1234"; // your PostgreSQL password
+    private static final String PASSWORD = "Trent"; // your PostgreSQL password
 
     // Load the PostgreSQL driver and return the DB connection
     public static Connection initializeDatabase() throws SQLException {
@@ -27,11 +27,11 @@ public class DatabaseConnection {
     public static boolean isConnectionValid() {
         try (Connection conn = initializeDatabase()) {
             if (conn != null && !conn.isClosed()) {
-                System.out.println("✅ Connection to PostgreSQL is successful!");
+                System.out.println("Connection to PostgreSQL is successful!");
                 return true;
             }
         } catch (SQLException e) {
-            System.err.println("❌ Database connection failed: " + e.getMessage());
+            System.err.println("Database connection failed: " + e.getMessage());
         }
         return false;
     }

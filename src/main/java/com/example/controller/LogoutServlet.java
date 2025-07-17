@@ -6,7 +6,7 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
-@WebServlet("/Logout") // <-- This tells the servlet container to map this URL
+@WebServlet("/Logout")
 public class LogoutServlet extends HttpServlet {
 
     @Override
