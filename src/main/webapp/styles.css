@@ -21,13 +21,13 @@ form {
     background-color: rgba(30, 41, 59, 0.95);
     padding: 40px 30px;
     border-radius: 16px;
-    width: 100%;
-    max-width: 420px;
+    width: 380px; /* fixed width instead of responsive */
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     animation: fadeInUp 0.7s ease;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
 
 /* === Icon Wrapper (New) === */
 .icon-wrapper {
@@ -307,3 +307,50 @@ input[type="file"] {
     background-color: transparent;
     border: none;
 }
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/* === Custom Alert === */
+.custom-alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1e293b;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    color: #f1f5f9;
+    display: none;
+    z-index: 9999;
+    text-align: center;
+    min-width: 320px;
+    border: 1px solid #3b82f6;
+}
+
+.custom-alert p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.custom-alert button {
+    padding: 0.6rem 1.4rem;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(to right, #38bdf8, #2563eb);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-alert button:hover {
+    background-color: #1d4ed8;
+}
+
+
+
+

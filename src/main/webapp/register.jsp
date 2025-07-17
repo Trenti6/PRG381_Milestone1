@@ -6,6 +6,10 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
+<div class="custom-alert" id="customAlert">
+    <p id="alertMessage">Something went wrong.</p>
+    <button onclick="closeAlert()">OK</button>
+</div>
 
 <form action="Register" method="post">
     <div class="icon-wrapper">
@@ -47,26 +51,35 @@
         }
     }
 
+    function showAlert(message) {
+        document.getElementById("alertMessage").textContent = message;
+        document.getElementById("customAlert").style.display = "block";
+    }
+
+    function closeAlert() {
+        document.getElementById("customAlert").style.display = "none";
+    }
+
     // Show alert based on msg param from server
     (function() {
         const urlParams = new URLSearchParams(window.location.search);
         const msg = urlParams.get('msg');
 
-        if (msg === 'empty_fields') {
-            alert('Please fill in all required fields.');
-        } else if (msg === 'invalid_email') {
-            alert('Invalid email address.');
-        } else if (msg === 'invalid_phone') {
-            alert('Phone number must be digits only (10–15 digits).');
-        } else if (msg === 'weak_password') {
-            alert('Password must be at least 6 characters.');
-        } else if (msg === 'already_exists') {
-            alert('An account with this email or student number already exists.');
-        } else if (msg === 'sql_error') {
-            alert('Database error. Please try again later.');
+        const messages = {
+            'empty_fields': 'Please fill in all required fields.',
+            'invalid_email': 'Invalid email address.',
+            'invalid_phone': 'Phone number must be digits only (10–15 digits).',
+            'weak_password': 'Password must be at least 6 characters.',
+            'already_exists': 'An account with this email or student number already exists.',
+            'sql_error': 'Database error. Please try again later.'
+        };
+
+        if (messages[msg]) {
+            showAlert(messages[msg]);
         }
     })();
 </script>
+
 
 </body>
 </html>

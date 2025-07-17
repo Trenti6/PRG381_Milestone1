@@ -13,11 +13,11 @@ import java.sql.*;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/Login")
 public class LoginServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
         try (Connection conn = DatabaseConnection.initializeDatabase()) {
             String sql = "SELECT * FROM users WHERE email = ?";
@@ -30,7 +30,6 @@ public class LoginServlet extends HttpServlet {
                 String hashedPassword = rs.getString("password");
 
                 if (BCrypt.checkpw(password, hashedPassword)) {
-                    // Create a User object from the DB result
                     byte[] profilePic = rs.getBytes("profile_pic");
 
                     User user = new User(
@@ -43,20 +42,22 @@ public class LoginServlet extends HttpServlet {
                             profilePic
                     );
 
-                    // Store User object in session
-                    HttpSession session = req.getSession();
+                    HttpSession session = request.getSession();
                     session.setAttribute("currentUser", user);
 
-                    res.sendRedirect("dashboard.jsp");
+                    response.sendRedirect("dashboard.jsp");
                     return;
                 }
             }
 
-            res.sendRedirect("login.jsp?msg=invalid");
+            // ❗ Forward with custom alert message
+            request.setAttribute("error", "Invalid email or password. Please try again.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            res.sendRedirect("login.jsp?msg=error");
+            request.setAttribute("error", "An internal error occurred. Please try again.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }

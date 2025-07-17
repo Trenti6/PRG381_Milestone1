@@ -8,28 +8,37 @@
 </head>
 <body>
 
-<form action="Login" method="post">
-    <div style="text-align: center;">
-        <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="card-icon" alt="User Icon">
-    </div>
+<!-- Custom Alert -->
+<div class="custom-alert" id="customAlert">
+    <p id="alertMessage">Invalid email or password. Please try again.</p>
+    <button onclick="closeAlert()">OK</button>
+</div>
 
-    <h2>Welcome Back</h2>
-    <p class="subtitle">Please login to continue</p>
+<!-- Login Form -->
+<div class="centered-container">
+    <form action="Login" method="post">
+        <div class="icon-wrapper">
+            <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" class="card-icon" alt="User Icon">
+        </div>
 
-    <input type="email" name="email" placeholder="Email Address" required>
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Please login to continue</p>
 
-    <div class="password-container">
-        <input type="password" id="password" name="password" placeholder="Password" required>
-        <span class="toggle-password" onclick="togglePassword()">🙈</span>
-    </div>
+        <input type="email" name="email" placeholder="Email Address" required>
 
-    <button type="button" class="forgot-btn">Forgot password?</button>
+        <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <span class="toggle-password" onclick="togglePassword()">🙈</span>
+        </div>
 
-    <input type="submit" value="Login">
-</form>
 
+
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+<!-- JavaScript -->
 <script>
-    // Password show/hide toggle
     function togglePassword() {
         const passwordInput = document.getElementById("password");
         const icon = document.querySelector(".toggle-password");
@@ -42,20 +51,24 @@
         }
     }
 
-    // Show alert based on msg param from server
-    (function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const msg = urlParams.get('msg');
+    function showAlert(message) {
+        const alertBox = document.getElementById("customAlert");
+        const alertMsg = document.getElementById("alertMessage");
+        alertMsg.textContent = message;
+        alertBox.style.display = "block";
+    }
 
-        if (msg === 'invalid') {
-            alert('Invalid email or password. Please try again.');
-        } else if (msg === 'error') {
-            alert('An error occurred. Please try again later.');
-        } else if (msg === 'logout') {
-            alert('You have been successfully logged out.');
-        }
-    })();
+    function closeAlert() {
+        document.getElementById("customAlert").style.display = "none";
+    }
 </script>
+
+<!-- JSP conditional logic to trigger alert -->
+<% if (request.getAttribute("error") != null) { %>
+<script>
+    showAlert("<%= request.getAttribute("error") %>");
+</script>
+<% } %>
 
 </body>
 </html>
